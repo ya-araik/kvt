@@ -27,7 +27,7 @@ jobs:
       - run: npm run check:licenses
       - run: npm audit --omit=dev --audit-level=high
       - run: npm run sbom
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         with:
           name: cyclonedx-sbom
           path: sbom.cdx.json
@@ -113,7 +113,7 @@ jobs:
       - run: npm run test:e2e
       - run: npm run build:packages
       - run: KVT_PACKAGE_E2E=1 npm run check:packages
-      - uses: actions/upload-artifact@v4
+      - uses: actions/upload-artifact@v7
         if: failure()
         with:
           name: playwright-report
