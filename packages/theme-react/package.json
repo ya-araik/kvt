@@ -1,0 +1,23 @@
+{
+  "name": "@kvt/theme-react",
+  "version": "1.0.0",
+  "description": "Scoped React theme provider with system preferences, persistence and SSR bootstrap.",
+  "author": "Araik Gukasyan",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/ya-araik/kvt.git", "directory": "packages/theme-react" },
+  "homepage": "https://ya-araik.github.io/kvt/", "bugs": { "url": "https://github.com/ya-araik/kvt/issues" },
+  "type": "module",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" } },
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run --environment jsdom",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": { "@kvt/theme-core": "^1.0.0", "react": "^18.3.0 || ^19.0.0" },
+  "devDependencies": { "@kvt/theme-core": "1.0.0", "react": "^19.2.7" },
+  "engines": { "node": "^20.19.0 || ^22.12.0 || >=24.0.0" },
+  "publishConfig": { "access": "public", "provenance": true }
+}

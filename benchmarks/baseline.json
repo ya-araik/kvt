@@ -1,0 +1,5 @@
+{
+  "stateFlowWritesPerSecond": 1000000,
+  "transientResolutionsPerSecond": 20000,
+  "runtimeCyclesPerSecond": 2000
+}

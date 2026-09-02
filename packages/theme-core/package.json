@@ -1,0 +1,21 @@
+{
+  "name": "@kvt/theme-core",
+  "version": "1.0.0",
+  "description": "Immutable renderer-independent semantic theme contracts, validation and CSS variables.",
+  "author": "Araik Gukasyan",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/ya-araik/kvt.git", "directory": "packages/theme-core" },
+  "homepage": "https://ya-araik.github.io/kvt/", "bugs": { "url": "https://github.com/ya-araik/kvt/issues" },
+  "type": "module",
+  "exports": { ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" } },
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepack": "npm run build"
+  },
+  "engines": { "node": "^20.19.0 || ^22.12.0 || >=24.0.0" },
+  "publishConfig": { "access": "public", "provenance": true }
+}

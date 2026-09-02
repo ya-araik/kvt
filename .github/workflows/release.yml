@@ -1,0 +1,78 @@
+name: Publish release
+
+on:
+  workflow_dispatch:
+    inputs:
+      version:
+        description: Exact version to publish and tag after registry smoke tests
+        required: true
+        default: 1.0.0
+
+permissions:
+  contents: write
+  id-token: write
+
+concurrency:
+  group: npm-release
+  cancel-in-progress: false
+
+jobs:
+  publish:
+    runs-on: ubuntu-latest
+    environment: npm
+    timeout-minutes: 60
+    env:
+      VERSION: ${{ inputs.version }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          ref: main
+          fetch-depth: 0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          registry-url: https://registry.npmjs.org
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - run: npm run check:coverage
+      - run: npm run test:mutation
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:e2e
+      - run: npm run check:licenses
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run sbom
+      - name: Verify release tag and package versions
+        run: node scripts/verify-release-version.mjs "$VERSION"
+      - name: Publish packages in dependency order with provenance
+        run: |
+          npm publish -w @kvt/eslint-plugin --provenance --access public
+          npm publish -w @kvt/flow --provenance --access public
+          npm publish -w @kvt/core --provenance --access public
+          npm publish -w @kvt/theme-core --provenance --access public
+          npm publish -w @kvt/devtools-protocol --provenance --access public
+          npm publish -w @kvt/query --provenance --access public
+          npm publish -w @kvt/react --provenance --access public
+          npm publish -w @kvt/router-react --provenance --access public
+          npm publish -w @kvt/theme-react --provenance --access public
+          npm publish -w @kvt/theme-tailwind --provenance --access public
+          npm publish -w @kvt/otel --provenance --access public
+          npm publish -w @kvt/devtools-react --provenance --access public
+          npm publish -w @kvt/testing --provenance --access public
+          npm publish -w @kvt/testing-react --provenance --access public
+          npm publish -w @kvt/cli --provenance --access public
+          npm publish -w create-kvt --provenance --access public
+      - name: Smoke clean installations from npm
+        run: node scripts/smoke-npm-release.mjs "$VERSION"
+      - name: Create tag and GitHub release only after npm smoke succeeds
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          tag="v$VERSION"
+          if git rev-parse "$tag" >/dev/null 2>&1; then
+            echo "Tag $tag already exists; refusing to move an immutable release tag."
+            exit 1
+          fi
+          git tag -a "$tag" -m "KVT $VERSION"
+          git push origin "$tag"
+          gh release create "$tag" sbom.cdx.json --verify-tag --generate-notes --title "KVT $VERSION"

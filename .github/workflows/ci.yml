@@ -1,0 +1,120 @@
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches: [main]
+
+permissions:
+  contents: read
+
+concurrency:
+  group: ci-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  quality:
+    runs-on: ubuntu-latest
+    timeout-minutes: 25
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run check
+      - run: npm run check:licenses
+      - run: npm audit --omit=dev --audit-level=high
+      - run: npm run sbom
+      - uses: actions/upload-artifact@v4
+        with:
+          name: cyclonedx-sbom
+          path: sbom.cdx.json
+
+  node-matrix:
+    strategy:
+      fail-fast: false
+      matrix:
+        node: [20, 22, 24]
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: ${{ matrix.node }}
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm run test
+      - run: npm run build:packages
+      - run: npm run check:boundaries
+
+  compatibility:
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - react: 18.3.1
+            reactTypes: 18.3.24
+            reactDomTypes: 18.3.7
+            router: 7.18.2
+            typescript: 5.7.3
+          - react: 19.2.7
+            reactTypes: 19.2.17
+            reactDomTypes: 19.2.3
+            router: 8.3.0
+            typescript: 6.0.3
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm install --no-save --package-lock=false --ignore-scripts --force --no-audit --no-fund react@${{ matrix.react }} react-dom@${{ matrix.react }} @types/react@${{ matrix.reactTypes }} @types/react-dom@${{ matrix.reactDomTypes }} react-router@${{ matrix.router }} typescript@${{ matrix.typescript }}
+      - run: node scripts/prepare-peer-matrix.mjs
+      - run: npm run clean && npm run build:packages
+      - run: npm run typecheck -w @kvt/react -w @kvt/router-react -w @kvt/testing-react
+      - run: npm run test -w @kvt/react -w @kvt/router-react
+
+  operating-system-smoke:
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [macos-latest, windows-latest]
+    runs-on: ${{ matrix.os }}
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npm run build:packages
+      - run: npm run test -w @kvt/core -w @kvt/flow -w @kvt/react
+      - run: npm run check:packages
+
+  browser-e2e:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+      - run: npm ci --ignore-scripts
+      - run: npx playwright install --with-deps chromium firefox webkit
+      - run: npm run test:e2e
+      - run: npm run build:packages
+      - run: KVT_PACKAGE_E2E=1 npm run check:packages
+      - uses: actions/upload-artifact@v4
+        if: failure()
+        with:
+          name: playwright-report
+          path: playwright-report

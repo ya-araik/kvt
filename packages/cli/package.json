@@ -1,0 +1,15 @@
+{
+  "name": "@kvt/cli", "version": "1.0.0",
+  "description": "KVT project doctor and architecture generators.",
+  "author": "Araik Gukasyan", "license": "MIT", "type": "module",
+  "repository": { "type": "git", "url": "git+https://github.com/ya-araik/kvt.git", "directory": "packages/cli" },
+  "homepage": "https://ya-araik.github.io/kvt/", "bugs": { "url": "https://github.com/ya-araik/kvt/issues" },
+  "bin": { "kvt": "./dist/cli.js" },
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" }
+  },
+  "files": ["dist", "README.md", "LICENSE"], "sideEffects": false,
+  "scripts": { "build": "tsc -p tsconfig.json", "typecheck": "tsc -p tsconfig.json --noEmit", "test": "vitest run", "prepack": "npm run build" },
+  "engines": { "node": "^20.19.0 || ^22.12.0 || >=24.0.0" },
+  "publishConfig": { "access": "public", "provenance": true }
+}

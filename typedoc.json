@@ -1,0 +1,29 @@
+{
+  "$schema": "https://typedoc.org/schema.json",
+  "name": "KVT Framework 1.0 API",
+  "tsconfig": "tsconfig.typedoc.json",
+  "entryPoints": [
+    "packages/core/src/index.ts",
+    "packages/flow/src/index.ts",
+    "packages/react/src/index.ts",
+    "packages/router-react/src/index.tsx",
+    "packages/theme-core/src/index.ts",
+    "packages/theme-react/src/index.tsx",
+    "packages/theme-tailwind/src/index.ts",
+    "packages/query/src/index.ts",
+    "packages/testing/src/index.ts",
+    "packages/testing-react/src/index.tsx",
+    "packages/otel/src/index.ts",
+    "packages/devtools-protocol/src/index.ts",
+    "packages/devtools-react/src/index.tsx",
+    "packages/eslint-plugin/src/index.ts",
+    "packages/cli/src/index.ts",
+    "packages/create-kvt/src/index.ts"
+  ],
+  "alwaysCreateEntryPointModule": true,
+  "out": "temp/typedoc",
+  "readme": "none",
+  "excludeExternals": true,
+  "excludeInternal": true,
+  "treatWarningsAsErrors": true
+}

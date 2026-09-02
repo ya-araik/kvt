@@ -1,0 +1,24 @@
+{
+  "name": "@kvt/theme-tailwind",
+  "version": "1.0.0",
+  "description": "Tailwind CSS 4 mapping for KVT namespaced semantic theme variables.",
+  "author": "Araik Gukasyan",
+  "license": "MIT",
+  "repository": { "type": "git", "url": "git+https://github.com/ya-araik/kvt.git", "directory": "packages/theme-tailwind" },
+  "homepage": "https://ya-araik.github.io/kvt/", "bugs": { "url": "https://github.com/ya-araik/kvt/issues" },
+  "type": "module",
+  "exports": {
+    ".": { "types": "./dist/index.d.ts", "import": "./dist/index.js", "default": "./dist/index.js" },
+    "./theme.css": {
+      "types": "./theme.css.d.ts",
+      "default": "./theme.css"
+    }
+  },
+  "files": ["dist", "theme.css", "theme.css.d.ts", "README.md", "LICENSE"],
+  "sideEffects": ["./theme.css"],
+  "scripts": { "build": "tsc -p tsconfig.json", "typecheck": "tsc -p tsconfig.json --noEmit", "test": "vitest run", "prepack": "npm run build" },
+  "peerDependencies": { "@kvt/theme-core": "^1.0.0", "tailwindcss": "^4.0.0" },
+  "devDependencies": { "@kvt/theme-core": "1.0.0", "tailwindcss": "^4.3.1" },
+  "engines": { "node": "^20.19.0 || ^22.12.0 || >=24.0.0" },
+  "publishConfig": { "access": "public", "provenance": true }
+}

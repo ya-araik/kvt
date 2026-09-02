@@ -1,0 +1,39 @@
+{
+  "name": "@kvt/example-ssr",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run typecheck && vite build && vite build --ssr src/server.tsx",
+    "format": "prettier --write .",
+    "format:check": "prettier --check .",
+    "lint": "eslint . --max-warnings=0",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@kvt/core": "1.0.0",
+    "@kvt/flow": "1.0.0",
+    "@kvt/react": "1.0.0",
+    "@kvt/router-react": "1.0.0",
+    "@kvt/theme-react": "1.0.0",
+    "@kvt/theme-tailwind": "1.0.0",
+    "react": "^19.2.7",
+    "react-dom": "^19.2.7",
+    "react-router": "^7.18.2"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.39.0",
+    "@kvt/eslint-plugin": "1.0.0",
+    "@tailwindcss/vite": "^4.3.1",
+    "eslint": "^9.39.0",
+    "eslint-config-prettier": "^10.1.8",
+    "eslint-plugin-react-hooks": "^7.1.0",
+    "eslint-plugin-react-refresh": "^0.5.0",
+    "globals": "^17.0.0",
+    "prettier": "^3.8.0",
+    "tailwindcss": "^4.3.1",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.0.0"
+  }
+}

@@ -1,0 +1,48 @@
+{
+  "name": "@kvt/eslint-plugin",
+  "version": "1.0.0",
+  "description": "ESLint flat-config rules for KVT lifecycle and Clean Architecture boundaries.",
+  "author": "Araik Gukasyan",
+  "license": "MIT",
+  "type": "module",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/ya-araik/kvt.git",
+    "directory": "packages/eslint-plugin"
+  },
+  "homepage": "https://ya-araik.github.io/kvt/",
+  "bugs": {
+    "url": "https://github.com/ya-araik/kvt/issues"
+  },
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "default": "./dist/index.js"
+    }
+  },
+  "files": ["dist", "README.md", "LICENSE"],
+  "sideEffects": false,
+  "scripts": {
+    "build": "tsc -p tsconfig.json",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "test": "vitest run",
+    "prepack": "npm run build"
+  },
+  "peerDependencies": {
+    "eslint": "^9.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^25.0.0",
+    "eslint": "^9.39.0",
+    "typescript-eslint": "^8.61.0",
+    "vitest": "^4.0.0"
+  },
+  "engines": {
+    "node": "^20.19.0 || ^22.12.0 || >=24.0.0"
+  },
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  }
+}
