@@ -27,7 +27,7 @@
     "@kvt/theme-react": "1.0.0",
     "@kvt/theme-tailwind": "1.0.0",
     "idb": "^8.0.3",
-    "lucide-react": "^1.33.0",
+    "lucide-react": "^1.37.0",
     "react": "^19.2.7",
     "react-dom": "^19.2.7",
     "react-router": "^7.18.2"
