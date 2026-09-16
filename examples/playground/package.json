@@ -21,7 +21,7 @@
     "@kvt/theme-react": "1.0.0",
     "@kvt/theme-tailwind": "1.0.0",
     "react": "^19.0.0",
-    "react-dom": "^19.0.0",
+    "react-dom": "^19.3.0",
     "react-router": "^7.0.0 || ^8.0.0"
   },
   "devDependencies": {
@@ -30,7 +30,7 @@
     "@playwright/test": "^1.54.0",
     "@tailwindcss/vite": "^4.0.0",
     "@types/react": "^19.0.0",
-    "@types/react-dom": "^19.0.0",
+    "@types/react-dom": "^19.3.0",
     "@vitejs/plugin-react": "^5.0.0",
     "eslint": "^9.39.0",
     "eslint-config-prettier": "^10.1.8",
