@@ -19,7 +19,7 @@
     "@kvt/theme-react": "1.0.0",
     "@kvt/theme-tailwind": "1.0.0",
     "react": "^19.2.7",
-    "react-dom": "^19.2.7",
+    "react-dom": "^19.3.0",
     "react-router": "^7.18.2"
   },
   "devDependencies": {
