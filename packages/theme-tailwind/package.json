@@ -18,7 +18,7 @@
   "sideEffects": ["./theme.css"],
   "scripts": { "build": "tsc -p tsconfig.json", "typecheck": "tsc -p tsconfig.json --noEmit", "test": "vitest run", "prepack": "npm run build" },
   "peerDependencies": { "@kvt/theme-core": "^1.0.0", "tailwindcss": "^4.0.0" },
-  "devDependencies": { "@kvt/theme-core": "1.0.0", "tailwindcss": "^4.3.1" },
+  "devDependencies": { "@kvt/theme-core": "1.0.0", "tailwindcss": "^4.3.5" },
   "engines": { "node": "^20.19.0 || ^22.12.0 || >=24.0.0" },
   "publishConfig": { "access": "public", "provenance": true }
 }
